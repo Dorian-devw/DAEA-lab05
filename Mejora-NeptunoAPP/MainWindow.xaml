@@ -1,0 +1,147 @@
+<Window x:Class="Mejora_NeptunoAPP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mejora_NeptunoAPP"
+        xmlns:viewmodels="clr-namespace:Mejora_NeptunoAPP.ViewModels"
+        xmlns:views="clr-namespace:Mejora_NeptunoAPP.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="Neptuno APP - MVVM" Height="700" Width="1150"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        FontFamily="Segoe UI">
+
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:ProductoViewModel}">
+            <views:ProductosView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:CategoriaViewModel}">
+            <views:CategoriasView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ProveedorViewModel}">
+            <views:ProveedoresView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:PedidoViewModel}">
+            <views:PedidosView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Border Background="#F5F6F8" CornerRadius="12" ClipToBounds="True">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Main Content -->
+            <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Margin="40"/>
+           
+
+            <!-- Sidebar (Empuja el contenido) -->
+            <Border x:Name="Sidebar" Grid.Column="0" Background="#1C1C1E" Margin="0" Width="70" HorizontalAlignment="Left" ClipToBounds="True">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Width" To="280" Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Width" To="70" Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                
+                <!-- Contenido del Sidebar -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0,40,0,10">
+                        <!-- Logo -->
+                        <Grid Margin="0,0,0,40" Height="40">
+                            <!-- Contenedor del SVG -->
+                            <Viewbox Width="36" Height="36" HorizontalAlignment="Left" Margin="17,0,0,0">
+                                <Canvas Width="578.207" Height="600.517">
+                                    <Canvas.RenderTransform>
+                                        <TranslateTransform X="-16.897" Y="-95.742" />
+                                    </Canvas.RenderTransform>
+                                    <Path Fill="White" Data="m16.897 696.259v-600.517l355.583 215.958s10.494-18.844-4.455-30.427l-14.949-11.551-18.844-13.695 115.272-69.368v268.43l-329.612-199.095v324.794s2.476 57.817-22.242 72.041-80.753 43.43-80.753 43.43z" />
+                                    <Path Fill="White" Data="m595.104 95.742v600.517l-355.584-215.958s-10.494 18.844 4.455 30.427l14.949 11.551 18.844 13.695-115.271 69.367v-268.396l329.611 199.062v-324.828s-2.475-57.817 22.242-72.041c24.718-14.223 80.754-43.396 80.754-43.396z" />
+                                </Canvas>
+                            </Viewbox>
+                            
+                            <TextBlock Text="Neptuno" Foreground="White" FontSize="24" FontWeight="Bold" Margin="70,0,0,0" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Button Command="{Binding NavProductosCommand}" Background="Transparent" BorderThickness="0" Margin="0,5" Height="40" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
+                                <iconPacks:PackIconFontAwesome Kind="BoxSolid" Foreground="White" Width="22" Height="22" VerticalAlignment="Center" Margin="24,0,0,0"/>
+                                <TextBlock Text="Productos" Foreground="White" FontSize="16" Margin="35,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        
+                        <Button Command="{Binding NavCategoriasCommand}" Background="Transparent" BorderThickness="0" Margin="0,5" Height="40" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
+                                <iconPacks:PackIconFontAwesome Kind="TagsSolid" Foreground="White" Width="22" Height="22" VerticalAlignment="Center" Margin="24,0,0,0"/>
+                                <TextBlock Text="Categorías" Foreground="White" FontSize="16" Margin="35,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{Binding NavProveedoresCommand}" Background="Transparent" BorderThickness="0" Margin="0,5" Height="40" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
+                                <iconPacks:PackIconFontAwesome Kind="TruckSolid" Foreground="White" Width="22" Height="22" VerticalAlignment="Center" Margin="24,0,0,0"/>
+                                <TextBlock Text="Proveedores" Foreground="White" FontSize="16" Margin="35,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{Binding NavPedidosCommand}" Background="Transparent" BorderThickness="0" Margin="0,5" Height="40" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
+                                <iconPacks:PackIconFontAwesome Kind="ShoppingCartSolid" Foreground="White" Width="22" Height="22" VerticalAlignment="Center" Margin="24,0,0,0"/>
+                                <TextBlock Text="Pedidos" Foreground="White" FontSize="16" Margin="35,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Botón Cerrar en el fondo -->
+                    <Button Grid.Row="1" Click="BtnClose_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,30" Height="40" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
+                            <iconPacks:PackIconFontAwesome Kind="SignOutAltSolid" Foreground="#E53935" Width="22" Height="22" VerticalAlignment="Center" Margin="24,0,0,0"/>
+                            <TextBlock Text="Cerrar Aplicación" Foreground="#E53935" FontSize="16" Margin="35,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
