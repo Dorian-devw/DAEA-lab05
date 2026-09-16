@@ -12,12 +12,25 @@ Una aplicación de escritorio moderna desarrollada en C# con **WPF (Windows Pres
 
 ## 📁 Módulos y Vistas
 
-La aplicación cuenta con 4 módulos principales, cuyas vistas de demostración se encuentran en la carpeta `public/` (imágenes de referencia):
+### 🔐 Pantalla de Autenticación (Login)
+![Login](public/login.png)
 
-1. **📦 Productos:** Mantenimiento (CRUD) con alta, edición y baja lógica de productos.
-2. **🏷️ Categorías:** Gestión detallada de las categorías del inventario.
-3. **🚚 Proveedores:** Incluye búsquedas avanzadas (por contacto y ciudad) a través de procedimientos almacenados.
-4. **🛒 Pedidos:** Sistema híbrido que incluye un CRUD de pedidos y una pestaña especializada de **Reportes de Detalles** filtrados por rango de fechas (`FechaInicio` y `FechaFin`).
+### 1. 📦 Productos
+Mantenimiento (CRUD) con alta, edición y baja lógica de productos.
+![Productos](public/vista-productos.png)
+
+### 2. 🏷️ Categorías
+Gestión detallada de las categorías del inventario.
+![Categorías](public/vista-categorias.png)
+
+### 3. 🚚 Proveedores
+Incluye búsquedas avanzadas (por contacto y ciudad) a través de procedimientos almacenados.
+![Proveedores](public/vista-proveedores.png)
+
+### 4. 🛒 Pedidos (Mantenimiento y Reportes)
+Sistema híbrido que incluye un CRUD de pedidos y una pestaña especializada de **Reportes de Detalles** filtrados por rango de fechas (`FechaInicio` y `FechaFin`).
+![Pedidos](public/vista-pedidos.png)
+![Reporte de Pedidos](public/vista-pedidos-reporte.png)
 
 ## 🛠️ Requisitos del Sistema
 
