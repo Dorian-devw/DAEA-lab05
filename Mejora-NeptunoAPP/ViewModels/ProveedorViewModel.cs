@@ -75,14 +75,16 @@ namespace Mejora_NeptunoAPP.ViewModels
             CargarProveedores();
         }
 
-        private void CargarProveedores()
+        private async void CargarProveedores()
         {
-            Proveedores = new ObservableCollection<Proveedor>(_repository.ListarActivos());
+            var list = await System.Threading.Tasks.Task.Run(() => _repository.ListarActivos());
+            Proveedores = new ObservableCollection<Proveedor>(list);
         }
 
-        private void Buscar(object parameter)
+        private async void Buscar(object parameter)
         {
-            Proveedores = new ObservableCollection<Proveedor>(_repository.Buscar(FiltroNombreContacto, FiltroCiudad));
+            var list = await System.Threading.Tasks.Task.Run(() => _repository.Buscar(FiltroNombreContacto, FiltroCiudad));
+            Proveedores = new ObservableCollection<Proveedor>(list);
         }
 
         private void Guardar(object parameter)

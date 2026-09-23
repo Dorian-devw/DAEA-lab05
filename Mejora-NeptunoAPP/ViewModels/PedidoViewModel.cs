@@ -81,14 +81,16 @@ namespace Mejora_NeptunoAPP.ViewModels
             // GenerarReporte(null); // Optional: load report on start
         }
 
-        private void CargarPedidos()
+        private async void CargarPedidos()
         {
-            Pedidos = new ObservableCollection<Pedido>(_repository.ListarActivos());
+            var list = await System.Threading.Tasks.Task.Run(() => _repository.ListarActivos());
+            Pedidos = new ObservableCollection<Pedido>(list);
         }
 
-        private void GenerarReporte(object parameter)
+        private async void GenerarReporte(object parameter)
         {
-            ReporteDetalles = new ObservableCollection<DetallePedido>(_repository.ReporteDetallesPorFecha(FiltroFechaInicio, FiltroFechaFin));
+            var list = await System.Threading.Tasks.Task.Run(() => _repository.ReporteDetallesPorFecha(FiltroFechaInicio, FiltroFechaFin));
+            ReporteDetalles = new ObservableCollection<DetallePedido>(list);
         }
 
         private void Guardar(object parameter)

@@ -16,17 +16,18 @@ namespace Mejora_NeptunoAPP.Data
                 using (var cmd = new SqlCommand("sp_ListarCategoriasActivas", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    conn.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        while (reader.Read())
+                        var dt = new DataTable();
+                        da.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
                         {
                             list.Add(new Categoria
                             {
-                                CategoriaID = (int)reader["CategoriaID"],
-                                NombreCategoria = reader["NombreCategoria"].ToString(),
-                                Descripcion = reader["Descripcion"].ToString(),
-                                Activo = (bool)reader["Activo"]
+                                CategoriaID = (int)row["CategoriaID"],
+                                NombreCategoria = row["NombreCategoria"].ToString(),
+                                Descripcion = row["Descripcion"].ToString(),
+                                Activo = (bool)row["Activo"]
                             });
                         }
                     }

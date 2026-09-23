@@ -68,9 +68,9 @@ namespace Mejora_NeptunoAPP.ViewModels
             CargarProductos();
         }
 
-        private void CargarProductos()
+        private async void CargarProductos()
         {
-            var lista = _repository.ListarActivos();
+            var lista = await System.Threading.Tasks.Task.Run(() => _repository.ListarActivos());
             Productos = new ObservableCollection<Producto>(lista);
         }
 

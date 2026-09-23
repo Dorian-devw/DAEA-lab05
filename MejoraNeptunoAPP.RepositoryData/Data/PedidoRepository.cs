@@ -16,24 +16,25 @@ namespace Mejora_NeptunoAPP.Data
                 using (var cmd = new SqlCommand("sp_ListarPedidosActivos", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    conn.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        while (reader.Read())
+                        var dt = new DataTable();
+                        da.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
                         {
                             list.Add(new Pedido
                             {
-                                PedidoID = (int)reader["PedidoID"],
-                                ClienteID = reader["ClienteID"] as int?,
-                                EmpleadoID = reader["EmpleadoID"] as int?,
-                                FechaPedido = (DateTime)reader["FechaPedido"],
-                                FechaRequerida = reader["FechaRequerida"] as DateTime?,
-                                FechaEnvio = reader["FechaEnvio"] as DateTime?,
-                                TransportistaID = reader["TransportistaID"] as int?,
-                                Destinatario = reader["Destinatario"].ToString(),
-                                CiudadDestino = reader["CiudadDestino"].ToString(),
-                                PaisDestino = reader["PaisDestino"].ToString(),
-                                Activo = (bool)reader["Activo"]
+                                PedidoID = (int)row["PedidoID"],
+                                ClienteID = row["ClienteID"] == DBNull.Value ? (int?)null : (int)row["ClienteID"],
+                                EmpleadoID = row["EmpleadoID"] == DBNull.Value ? (int?)null : (int)row["EmpleadoID"],
+                                FechaPedido = (DateTime)row["FechaPedido"],
+                                FechaRequerida = row["FechaRequerida"] == DBNull.Value ? (DateTime?)null : (DateTime)row["FechaRequerida"],
+                                FechaEnvio = row["FechaEnvio"] == DBNull.Value ? (DateTime?)null : (DateTime)row["FechaEnvio"],
+                                TransportistaID = row["TransportistaID"] == DBNull.Value ? (int?)null : (int)row["TransportistaID"],
+                                Destinatario = row["Destinatario"].ToString(),
+                                CiudadDestino = row["CiudadDestino"].ToString(),
+                                PaisDestino = row["PaisDestino"].ToString(),
+                                Activo = (bool)row["Activo"]
                             });
                         }
                     }
@@ -53,19 +54,20 @@ namespace Mejora_NeptunoAPP.Data
                     cmd.Parameters.AddWithValue("@FechaInicio", inicio);
                     cmd.Parameters.AddWithValue("@FechaFin", fin);
                     
-                    conn.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        while (reader.Read())
+                        var dt = new DataTable();
+                        da.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
                         {
                             list.Add(new DetallePedido
                             {
-                                PedidoID = (int)reader["PedidoID"],
-                                ProductoID = (int)reader["ProductoID"],
-                                PrecioUnidad = (decimal)reader["PrecioUnidad"],
-                                Cantidad = (short)reader["Cantidad"],
-                                Descuento = (decimal)reader["Descuento"],
-                                FechaPedido = (DateTime)reader["FechaPedido"]
+                                PedidoID = (int)row["PedidoID"],
+                                ProductoID = (int)row["ProductoID"],
+                                PrecioUnidad = (decimal)row["PrecioUnidad"],
+                                Cantidad = (short)row["Cantidad"],
+                                Descuento = (decimal)row["Descuento"],
+                                FechaPedido = (DateTime)row["FechaPedido"]
                             });
                         }
                     }

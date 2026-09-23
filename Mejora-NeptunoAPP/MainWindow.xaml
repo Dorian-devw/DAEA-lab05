@@ -8,7 +8,7 @@
         xmlns:views="clr-namespace:Mejora_NeptunoAPP.Views"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Neptuno APP - MVVM" Height="700" Width="1150"
+        Title="Neptuno APP - frank sinca" Height="700" Width="1150"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -113,7 +113,7 @@
                         
                         <Button Command="{Binding NavCategoriasCommand}" Background="Transparent" BorderThickness="0" Margin="0,5" Height="40" Cursor="Hand">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="250">
-                                <iconPacks:PackIconFontAwesome Kind="TagsSolid" Foreground="White" Width="22" Height="22" VerticalAlignment="Center" Margin="24,0,0,0"/>
+                                <iconPacks:PackIconFontAwesome Kind="q" Foreground="White" Width="22" Height="22" VerticalAlignment="Center" Margin="24,0,0,0"/>
                                 <TextBlock Text="Categorías" Foreground="White" FontSize="16" Margin="35,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>

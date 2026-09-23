@@ -16,24 +16,25 @@ namespace Mejora_NeptunoAPP.Data
                 using (var cmd = new SqlCommand("sp_ListarProductosActivos", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    conn.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        while (reader.Read())
+                        var dt = new DataTable();
+                        da.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
                         {
                             list.Add(new Producto
                             {
-                                ProductoID = (int)reader["ProductoID"],
-                                NombreProducto = reader["NombreProducto"].ToString(),
-                                ProveedorID = reader["ProveedorID"] as int?,
-                                CategoriaID = reader["CategoriaID"] as int?,
-                                CantidadPorUnidad = reader["CantidadPorUnidad"].ToString(),
-                                PrecioUnidad = (decimal)reader["PrecioUnidad"],
-                                UnidadesEnExistencia = (short)reader["UnidadesEnExistencia"],
-                                UnidadesEnPedido = (short)reader["UnidadesEnPedido"],
-                                NivelDeReorden = (short)reader["NivelDeReorden"],
-                                Descontinuado = (bool)reader["Descontinuado"],
-                                Activo = (bool)reader["Activo"]
+                                ProductoID = (int)row["ProductoID"],
+                                NombreProducto = row["NombreProducto"].ToString(),
+                                ProveedorID = row["ProveedorID"] == DBNull.Value ? (int?)null : (int)row["ProveedorID"],
+                                CategoriaID = row["CategoriaID"] == DBNull.Value ? (int?)null : (int)row["CategoriaID"],
+                                CantidadPorUnidad = row["CantidadPorUnidad"].ToString(),
+                                PrecioUnidad = (decimal)row["PrecioUnidad"],
+                                UnidadesEnExistencia = (short)row["UnidadesEnExistencia"],
+                                UnidadesEnPedido = (short)row["UnidadesEnPedido"],
+                                NivelDeReorden = (short)row["NivelDeReorden"],
+                                Descontinuado = (bool)row["Descontinuado"],
+                                Activo = (bool)row["Activo"]
                             });
                         }
                     }
@@ -60,7 +61,7 @@ namespace Mejora_NeptunoAPP.Data
                     cmd.Parameters.AddWithValue("@Descontinuado", p.Descontinuado);
                     
                     conn.Open();
-                    cmd.ExecuteNonQuery(); // As requested
+                    cmd.ExecuteNonQuery(); 
                 }
             }
         }
@@ -84,7 +85,7 @@ namespace Mejora_NeptunoAPP.Data
                     cmd.Parameters.AddWithValue("@Descontinuado", p.Descontinuado);
                     
                     conn.Open();
-                    cmd.ExecuteNonQuery(); // As requested
+                    cmd.ExecuteNonQuery(); 
                 }
             }
         }
@@ -99,7 +100,7 @@ namespace Mejora_NeptunoAPP.Data
                     cmd.Parameters.AddWithValue("@ProductoID", id);
                     
                     conn.Open();
-                    cmd.ExecuteNonQuery(); // As requested
+                    cmd.ExecuteNonQuery(); 
                 }
             }
         }
