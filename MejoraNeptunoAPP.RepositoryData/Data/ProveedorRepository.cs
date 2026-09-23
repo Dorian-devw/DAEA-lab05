@@ -16,12 +16,13 @@ namespace Mejora_NeptunoAPP.Data
                 using (var cmd = new SqlCommand("sp_ListarProveedoresActivos", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    conn.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        while (reader.Read())
+                        var dt = new DataTable();
+                        da.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
                         {
-                            list.Add(MapReaderToProveedor(reader));
+                            list.Add(MapRowToProveedor(row));
                         }
                     }
                 }
@@ -40,12 +41,13 @@ namespace Mejora_NeptunoAPP.Data
                     cmd.Parameters.AddWithValue("@NombreContacto", string.IsNullOrEmpty(nombreContacto) ? (object)DBNull.Value : nombreContacto);
                     cmd.Parameters.AddWithValue("@Ciudad", string.IsNullOrEmpty(ciudad) ? (object)DBNull.Value : ciudad);
                     
-                    conn.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        while (reader.Read())
+                        var dt = new DataTable();
+                        da.Fill(dt);
+                        foreach (DataRow row in dt.Rows)
                         {
-                            list.Add(MapReaderToProveedor(reader));
+                            list.Add(MapRowToProveedor(row));
                         }
                     }
                 }
@@ -53,21 +55,21 @@ namespace Mejora_NeptunoAPP.Data
             return list;
         }
         
-        private Proveedor MapReaderToProveedor(SqlDataReader reader)
+        private Proveedor MapRowToProveedor(DataRow row)
         {
             return new Proveedor
             {
-                ProveedorID = (int)reader["ProveedorID"],
-                CompaniaNombre = reader["CompaniaNombre"].ToString(),
-                NombreContacto = reader["NombreContacto"].ToString(),
-                CargoContacto = reader["CargoContacto"].ToString(),
-                Direccion = reader["Direccion"].ToString(),
-                Ciudad = reader["Ciudad"].ToString(),
-                CodigoPostal = reader["CodigoPostal"].ToString(),
-                Pais = reader["Pais"].ToString(),
-                Telefono = reader["Telefono"].ToString(),
-                Fax = reader["Fax"].ToString(),
-                Activo = (bool)reader["Activo"]
+                ProveedorID = (int)row["ProveedorID"],
+                CompaniaNombre = row["CompaniaNombre"].ToString(),
+                NombreContacto = row["NombreContacto"].ToString(),
+                CargoContacto = row["CargoContacto"].ToString(),
+                Direccion = row["Direccion"].ToString(),
+                Ciudad = row["Ciudad"].ToString(),
+                CodigoPostal = row["CodigoPostal"].ToString(),
+                Pais = row["Pais"].ToString(),
+                Telefono = row["Telefono"].ToString(),
+                Fax = row["Fax"].ToString(),
+                Activo = (bool)row["Activo"]
             };
         }
 
