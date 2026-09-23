@@ -59,10 +59,9 @@ namespace Mejora_NeptunoAPP.ViewModels
             CargarCategorias();
         }
 
-        private async void CargarCategorias()
+        private void CargarCategorias()
         {
-            var list = await System.Threading.Tasks.Task.Run(() => _repository.ListarActivos());
-            Categorias = new ObservableCollection<Categoria>(list);
+            Categorias = new ObservableCollection<Categoria>(_repository.ListarActivos());
         }
 
         private void Guardar(object parameter)
